@@ -1,25 +1,30 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Signin from '../src/components/pages/Signin';
+import Signup from '../src/components/pages/Signup';
+import Forgotpass from '../src/components/pages/Forgotpass';
+import PrivateRoute from '../src/components/routes/PrivateRoute';
+import Dashboard from '../src/components/dashboard/Dashboard';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import AuthState from '../src/components/context/authContext/AuthState';
+import ClassState from './components/context/classContext/ClassState';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthState>
+      <ClassState>
+        <BrowserRouter>
+          <div>
+            <Switch>
+              <Route exact path='/' component={Signin} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+              <Route exact path='/signup' component={Signup} />
+              <Route exact path='/forgotpass' component={Forgotpass} />
+            </Switch>
+          </div>
+        </BrowserRouter>
+      </ClassState>
+    </AuthState>
   );
 }
 
